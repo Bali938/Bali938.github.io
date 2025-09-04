@@ -188,19 +188,12 @@
       e.preventDefault();
       const kodeInput = document.getElementById("kode").value;
       if (kodeInput === kodeBenar) {
-        localStorage.setItem("akses","ok");
         document.getElementById("login").style.display = "none";
         document.getElementById("konten").style.display = "block";
       } else {
         alert("Kode salah!");
       }
     });
-
-    // kalau sudah pernah login, langsung masuk
-    if (localStorage.getItem("akses") === "ok") {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("konten").style.display = "block";
-    }
   </script>
 </body>
 </html>
