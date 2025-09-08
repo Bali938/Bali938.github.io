@@ -21,6 +21,7 @@
     .header {
       text-align: center;
       margin-bottom: 20px;
+      animation: fadeIn 1s ease-in-out;
     }
 
     .date {
@@ -31,6 +32,7 @@
       border-radius: 5px;
       display: inline-block;
       margin-bottom: 10px;
+      animation: fadeIn 1.2s ease-in-out;
     }
 
     .card {
@@ -39,6 +41,12 @@
       border-radius: 10px;
       margin-bottom: 15px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeInUp 0.8s ease-in-out;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
     }
 
     .league {
@@ -80,14 +88,17 @@
       padding: 3px 8px;
       border-radius: 5px;
       display: inline-block;
+      text-transform: capitalize;
     }
-
-    .win {
+    .status.pending {
+      background: #f1c40f;
+      color: #000;
+    }
+    .status.win {
       background: #2ecc71;
       color: #000;
     }
-
-    .lose {
+    .status.lose {
       background: #e74c3c;
       color: #fff;
     }
@@ -100,6 +111,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      animation: fadeIn 1s ease-in-out;
     }
     #login form {
       background: #222;
@@ -107,14 +119,30 @@
       border-radius: 10px;
       text-align: center;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      width: 280px;
+      animation: fadeInUp 0.8s ease-in-out;
+    }
+    #login label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #f39c12;
+      text-align: left;
     }
     #login input {
       padding: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       border: none;
       border-radius: 5px;
-      width: 200px;
+      width: 100%;
       text-align: center;
+    }
+    #login small {
+      display: block;
+      margin-bottom: 12px;
+      color: #bbb;
+      font-size: 12px;
+      text-align: left;
     }
     #login button {
       padding: 10px 20px;
@@ -124,6 +152,22 @@
       color: #000;
       font-weight: bold;
       cursor: pointer;
+      width: 100%;
+      transition: background 0.3s, transform 0.2s;
+    }
+    #login button:hover {
+      background: #d35400;
+      transform: scale(1.05);
+    }
+
+    /* Animasi */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -133,8 +177,14 @@
   <div id="login">
     <form id="formLogin">
       <h2>Masukkan Kode Akses</h2>
+      
+      <!-- Label utama -->
+      <label for="kode">Kode Akses VIP</label>
       <input type="password" id="kode" placeholder="KODE VIP" required>
-      <br>
+
+      <!-- Label tambahan -->
+      <small>Hubungi admin jika lupa kode.</small>
+
       <button type="submit">Masuk</button>
     </form>
   </div>
@@ -147,35 +197,50 @@
 
     <div class="date">2025-08-31 (Total Odds: 2.01)</div>
 
-    <div class="card">
+    <!-- Card 1 -->
+    <div class="card match-card">
       <div class="league">Europe : World Cup</div>
       <div class="match">
         <div class="teams">Croatia vs Montenegro</div>
-        <div class="pick">Croatia win</div>
+        <div class="pick">W1</div>
       </div>
       <div class="odds">Odds: 1.30 | Score: -</div>
-      <div class="status win">pending</div>
+      <div class="status pending">pending</div>
     </div>
 
-    <div class="card">
+    <!-- Card 2 -->
+    <div class="card match-card">
       <div class="league">Europe : World Cup</div>
       <div class="match">
         <div class="teams">Kosovo vs Sweden</div>
-        <div class="pick">Over+ 1.5</div>
+        <div class="pick">HT-FT W2/W2</div>
       </div>
       <div class="odds">Odds: 1.30 | Score: -</div>
-      <div class="status win">pending</div>
+      <div class="status pending">pending</div>
     </div>
 
-    <div class="card">
-      <div class="league">Europe : World Cup</div>
+    <!-- Card 3 -->
+    <div class="card match-card">
+      <div class="league">Ramah International</div>
       <div class="match">
-        <div class="teams">Israel vs Italy</div>
-        <div class="pick">Over+ 1.5</div>
+        <div class="teams">Indonesia vs Lebanon</div>
+        <div class="pick">W1</div>
       </div>
       <div class="odds">Odds: 1.21 | Score: -</div>
-      <div class="status win">pending</div>
+      <div class="status pending">pending</div>
     </div>
+
+    <!-- Card 4 (Tambahan) -->
+    <div class="card match-card">
+      <div class="league">Europe : World Cup</div>
+      <div class="match">
+        <div class="teams">Madagascar vs Chad</div>
+        <div class="pick">W1</div>
+      </div>
+      <div class="odds">Odds: 1.45 | Score: -</div>
+      <div class="status pending">pending</div>
+    </div>
+
   </div>
 
   <script>
