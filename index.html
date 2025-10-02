@@ -18,12 +18,30 @@
       padding: 15px;
     }
 
+    /* ===== NAVIGATION TAB ===== */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+      gap: 10px;
+    }
+    .tab {
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .tab.free { background: #f39c12; color: #000; }
+    .tab.vip { background: #444; color: #fff; }
+    .tab.active { background: #e67e22; color: #000; }
+
+    /* ===== HEADER & CONTENT ===== */
     .header {
       text-align: center;
       margin-bottom: 20px;
-      animation: fadeIn 1s ease-in-out;
+      animation: fadeIn 0.8s ease-in-out;
     }
-
     .date {
       background: #f1c40f;
       color: #000;
@@ -32,7 +50,6 @@
       border-radius: 5px;
       display: inline-block;
       margin-bottom: 10px;
-      animation: fadeIn 1.2s ease-in-out;
     }
 
     .card {
@@ -42,31 +59,27 @@
       margin-bottom: 15px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
       transition: transform 0.2s, box-shadow 0.2s;
-      animation: fadeInUp 0.8s ease-in-out;
+      animation: fadeInUp 0.6s ease-in-out;
     }
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 4px 12px rgba(0,0,0,0.7);
     }
-
     .league {
       font-size: 14px;
       color: #bbb;
       margin-bottom: 8px;
     }
-
     .match {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
     }
-
     .teams {
       font-size: 16px;
       font-weight: bold;
     }
-
     .pick {
       background: #f39c12;
       color: #000;
@@ -74,13 +87,11 @@
       padding: 5px 10px;
       border-radius: 5px;
     }
-
     .odds {
       font-size: 14px;
       color: #ccc;
       margin-top: 5px;
     }
-
     .status {
       margin-top: 5px;
       font-weight: bold;
@@ -90,37 +101,29 @@
       display: inline-block;
       text-transform: capitalize;
     }
-    .status.pending {
-      background: #f1c40f;
-      color: #000;
-    }
-    .status.win {
-      background: #2ecc71;
-      color: #000;
-    }
-    .status.lose {
-      background: #e74c3c;
-      color: #fff;
-    }
+    .status.pending { background: #f1c40f; color: #000; }
+    .status.win { background: #2ecc71; color: #000; }
+    .status.lose { background: #e74c3c; color: #fff; }
 
-    /* login overlay */
+    /* ===== LOGIN MODAL ===== */
     #login {
       position: fixed;
       inset: 0;
-      background: #111;
-      display: flex;
+      background: rgba(0,0,0,0.6);
+      display: none;
       align-items: center;
       justify-content: center;
-      animation: fadeIn 1s ease-in-out;
+      z-index: 2000;
     }
     #login form {
       background: #222;
       padding: 20px;
       border-radius: 10px;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
       width: 280px;
-      animation: fadeInUp 0.8s ease-in-out;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+      position: relative;
+      animation: fadeInUp 0.5s ease-in-out;
     }
     #login label {
       display: block;
@@ -131,18 +134,11 @@
     }
     #login input {
       padding: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       border: none;
       border-radius: 5px;
       width: 100%;
       text-align: center;
-    }
-    #login small {
-      display: block;
-      margin-bottom: 12px;
-      color: #bbb;
-      font-size: 12px;
-      text-align: left;
     }
     #login button {
       padding: 10px 20px;
@@ -153,11 +149,18 @@
       font-weight: bold;
       cursor: pointer;
       width: 100%;
-      transition: background 0.3s, transform 0.2s;
     }
-    #login button:hover {
-      background: #d35400;
-      transform: scale(1.05);
+    #login button:hover { background: #d35400; }
+
+    /* Close button */
+    .closeBtn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      cursor: pointer;
+      color: #f39c12;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     /* Animasi */
@@ -173,31 +176,43 @@
 </head>
 <body>
 
-  <!-- Login -->
-  <div id="login">
-    <form id="formLogin">
-      <h2>Masukkan Kode Akses</h2>
-      
-      <!-- Label utama -->
-      <label for="kode">Kode Akses VIP</label>
-      <input type="password" id="kode" placeholder="KODE VIP" required>
-
-      <!-- Label tambahan -->
-      <small>Hubungi admin jika lupa kode.</small>
-
-      <button type="submit">Masuk</button>
-    </form>
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab free active" id="tabFree">🔥 FREE</div>
+    <div class="tab vip" id="tabVip">⚡ VIP</div>
   </div>
 
-  <!-- Konten Website -->
-  <div id="konten" style="display:none">
-    <div class="header">
-      <h2>⚡ WANN VIP ⚡</h2>
+  <!-- Konten FREE -->
+  <div id="kontenFree">
+    <div class="header"><h2>🔥 FREE TIPS 🔥</h2></div>
+    <div class="date">2025-08-31 (Total Odds: 1.80)</div>
+
+    <div class="card match-card">
+      <div class="league">PREMIER LEAGUE</div>
+      <div class="match">
+        <div class="teams">CHELSEA VS WEST HAM</div>
+        <div class="pick">OVER +1.5</div>
+      </div>
+      <div class="odds">Odds: 1.25 | Score: -</div>
+      <div class="status pending">Pending</div>
     </div>
 
+    <div class="card match-card">
+      <div class="league">LA LIGA</div>
+      <div class="match">
+        <div class="teams">SEVILLA VS VILLARREAL</div>
+        <div class="pick">HOME OR DRAW</div>
+      </div>
+      <div class="odds">Odds: 1.30 | Score: -</div>
+      <div class="status pending">Pending</div>
+    </div>
+  </div>
+
+  <!-- Konten VIP -->
+  <div id="kontenVIP" style="display:none">
+    <div class="header"><h2>⚡ VIP TIPS ⚡</h2></div>
     <div class="date">2025-08-31 (Total Odds: 2.11)</div>
 
-    <!-- Card 1 -->
     <div class="card match-card">
       <div class="league">UEFA : EUROPE LEAGUE</div>
       <div class="match">
@@ -205,10 +220,9 @@
         <div class="pick">LYON WIN OR DRAW</div>
       </div>
       <div class="odds">Odds: 1.3 | Score: -</div>
-      <div class="status pending">pending</div>
+      <div class="status pending">Pending</div>
     </div>
 
-    <!-- Card 2 -->
     <div class="card match-card">
       <div class="league">UEFA : EUROPE LEAGUE</div>
       <div class="match">
@@ -216,33 +230,53 @@
         <div class="pick">OVER +1.5</div>
       </div>
       <div class="odds">Odds: 1.25 | Score: -</div>
-      <div class="status pending">pending</div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="card match-card">
-      <div class="league">UEFA : EUROPE LEAGUE</div>
-      <div class="match">
-        <div class="teams">AS ROMA VS LILLE OSC</div>
-        <div class="pick">AS ROMA WIN OR DRAW</div>
-      </div>
-      <div class="odds">Odds: 1.30 | Score: -</div>
-      <div class="status pending">pending</div>
+      <div class="status pending">Pending</div>
     </div>
   </div>
 
+  <!-- Login Modal -->
+  <div id="login">
+    <form id="formLogin">
+      <span class="closeBtn" onclick="document.getElementById('login').style.display='none'">✖</span>
+      <h2>Masukkan Kode VIP</h2>
+      <label for="kode">Kode Akses</label>
+      <input type="password" id="kode" placeholder="KODE VIP" required>
+      <button type="submit">Masuk</button>
+    </form>
+  </div>
+
   <script>
-    // ====== KODE AKSES ======
-    const kodeBenar = "VIP123"; // ganti sesuai keinginanmu
+    const tabFree = document.getElementById("tabFree");
+    const tabVip = document.getElementById("tabVip");
+    const kontenFree = document.getElementById("kontenFree");
+    const kontenVIP = document.getElementById("kontenVIP");
+    const login = document.getElementById("login");
+    const kodeBenar = "VIP123"; // ubah sesuai keinginanmu
 
+    // Klik tab FREE
+    tabFree.addEventListener("click", () => {
+      tabFree.classList.add("active");
+      tabVip.classList.remove("active");
+      kontenFree.style.display = "block";
+      kontenVIP.style.display = "none";
+    });
+
+    // Klik tab VIP
+    tabVip.addEventListener("click", () => {
+      login.style.display = "flex";
+    });
+
+    // Form Login
     const loginForm = document.getElementById("formLogin");
-
     loginForm.addEventListener("submit", function(e) {
       e.preventDefault();
       const kodeInput = document.getElementById("kode").value;
       if (kodeInput === kodeBenar) {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("konten").style.display = "block";
+        login.style.display = "none";
+        tabVip.classList.add("active");
+        tabFree.classList.remove("active");
+        kontenVIP.style.display = "block";
+        kontenFree.style.display = "none";
       } else {
         alert("Kode salah!");
       }
