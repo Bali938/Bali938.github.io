@@ -75,18 +75,19 @@ body{background:#111;color:#fff;padding:15px}
 <!-- VIP -->
 <div id="kontenVIP" style="display:none">
   <div class="header"><h2>⚡ BS.COM VIP ⚡</h2></div>
-  <div class="date">24-12-2025 (Total Odds: 27)</div>
-
+  <div class="date">25-12-2025 (Total Odds: 22)</div>
+  
   <div class="card">
-    <div class="league">PIALA AFRIKA</div>
+    <div class="league">EGYPT : LEAGUE CUP</div>
     <div class="match">
-      <div class="teams">IVORY COAST VS MOZAMBIK</div>
-      <div class="pick">CORRECT SCORE 1-0</div>
+      <div class="teams">PYRAMIDS VS EL ISMAILY</div>
+      <div class="pick">CS 1-2</div>
     </div>
-    <div class="odds">Odds: 5.4</div>
-    <div class="status win">win</div>
+    <div class="odds">Odds: 22</div>
+    <div class="status pending">pending</div>
   </div>
-
+  
+    <div class="date">24-12-2025 (Total Odds: 27)</div>
   <div class="card">
     <div class="league">PIALA AFRIKA</div>
     <div class="match">
@@ -94,6 +95,16 @@ body{background:#111;color:#fff;padding:15px}
       <div class="pick">CORRECT SCORE 3-0</div>
     </div>
     <div class="odds">Odds: 5</div>
+    <div class="status win">win</div>
+  </div>
+  
+  <div class="card">
+    <div class="league">PIALA AFRIKA</div>
+    <div class="match">
+      <div class="teams">IVORY COAST VS MOZAMBIK</div>
+      <div class="pick">CORRECT SCORE 1-0</div>
+    </div>
+    <div class="odds">Odds: 5.4</div>
     <div class="status win">win</div>
   </div>
 </div>
@@ -109,39 +120,39 @@ body{background:#111;color:#fff;padding:15px}
 </div>
 
 <script>
-const tabFree=document.getElementById("tabFree")
-const tabVip=document.getElementById("tabVip")
-const kontenFree=document.getElementById("kontenFree")
-const kontenVIP=document.getElementById("kontenVIP")
-const login=document.getElementById("login")
-const formLogin=document.getElementById("formLogin")
-const kode=document.getElementById("kode")
-const kodeBenar="ZXCVBNM00"
+const tabFree = document.getElementById("tabFree");
+const tabVip = document.getElementById("tabVip");
+const kontenFree = document.getElementById("kontenFree");
+const kontenVIP = document.getElementById("kontenVIP");
+const login = document.getElementById("login");
+const formLogin = document.getElementById("formLogin");
+const kode = document.getElementById("kode");
+const kodeBenar = "*****";
 
-tabFree.onclick=()=>{
-  tabFree.classList.add("active")
-  tabVip.classList.remove("active")
-  kontenFree.style.display="block"
-  kontenVIP.style.display="none"
-}
+tabFree.onclick = () => {
+  tabFree.classList.add("active");
+  tabVip.classList.remove("active");
+  kontenFree.style.display = "block";
+  kontenVIP.style.display = "none";
+};
 
-tabVip.onclick=()=>{
-  login.style.display="flex"
-}
+tabVip.onclick = () => {
+  login.style.display = "flex";
+};
 
-formLogin.onsubmit=e=>{
-  e.preventDefault()
-  if(kode.value===kodeBenar){
-    login.style.display="none"
-    tabVip.classList.add("active")
-    tabFree.classList.remove("active")
-    kontenVIP.style.display="block"
-    kontenFree.style.display="none"
-    kode.value=""
-  }else{
-    alert("Kode salah!")
+formLogin.onsubmit = e => {
+  e.preventDefault();
+  if (kode.value === kodeBenar) {
+    login.style.display = "none";
+    tabVip.classList.add("active");
+    tabFree.classList.remove("active");
+    kontenVIP.style.display = "block";
+    kontenFree.style.display = "none";
+    kode.value = "";
+  } else {
+    alert("Kode salah!");
   }
-}
+};
 </script>
 
 </body>
