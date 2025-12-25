@@ -21,16 +21,17 @@ body{background:#111;color:#fff;padding:15px}
 .date{background:#f1c40f;color:#000;font-weight:bold;padding:6px 10px;border-radius:5px;display:inline-block;margin-bottom:10px}
 .card{background:#222;padding:15px;border-radius:10px;margin-bottom:15px}
 .league{font-size:14px;color:#bbb;margin-bottom:6px}
-.match{display:flex;justify-content:space-between;align-items:center}
+.match{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .teams{font-weight:bold}
 .pick{background:#f39c12;color:#000;font-weight:bold;padding:5px 10px;border-radius:5px}
 .odds{color:#ccc;margin-top:5px}
 .status{margin-top:5px;font-weight:bold;padding:3px 8px;border-radius:5px;display:inline-block}
 .pending{background:#f1c40f;color:#000}
+.win{background:#2ecc71;color:#000}
 
 /* LOGIN */
 #login{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
-#login form{background:#222;padding:20px;border-radius:10px;width:260px;text-align:center}
+#login form{background:#222;padding:20px;border-radius:10px;width:260px;text-align:center;position:relative}
 #login input{width:100%;padding:10px;margin:10px 0;border-radius:5px;border:none}
 #login button{width:100%;padding:10px;background:#f39c12;border:none;font-weight:bold;cursor:pointer}
 .close{position:absolute;top:10px;right:15px;cursor:pointer}
@@ -69,6 +70,7 @@ body{background:#111;color:#fff;padding:15px}
     <div class="odds">Odds: 1.50</div>
     <div class="status pending">pending</div>
   </div>
+</div>
 
 <!-- VIP -->
 <div id="kontenVIP" style="display:none">
@@ -112,6 +114,8 @@ const tabVip=document.getElementById("tabVip")
 const kontenFree=document.getElementById("kontenFree")
 const kontenVIP=document.getElementById("kontenVIP")
 const login=document.getElementById("login")
+const formLogin=document.getElementById("formLogin")
+const kode=document.getElementById("kode")
 const kodeBenar="ZXCVBNM00"
 
 tabFree.onclick=()=>{
@@ -121,7 +125,9 @@ tabFree.onclick=()=>{
   kontenVIP.style.display="none"
 }
 
-tabVip.onclick=()=>login.style.display="flex"
+tabVip.onclick=()=>{
+  login.style.display="flex"
+}
 
 formLogin.onsubmit=e=>{
   e.preventDefault()
@@ -131,7 +137,10 @@ formLogin.onsubmit=e=>{
     tabFree.classList.remove("active")
     kontenVIP.style.display="block"
     kontenFree.style.display="none"
-  }else alert("Kode salah!")
+    kode.value=""
+  }else{
+    alert("Kode salah!")
+  }
 }
 </script>
 
