@@ -3,164 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FORLAN PICK</title>
+<title>WHISMEE</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#111;color:#fff;padding:15px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{background:#000;color:#fff;padding:18px}
 
-/* TAB */
-.tabs{display:flex;justify-content:center;gap:10px;margin-bottom:15px}
-.tab{padding:8px 18px;border-radius:6px;cursor:pointer;font-weight:bold}
-.tab.free{background:#f39c12;color:#000}
-.tab.vip{background:#444;color:#fff}
-.tab.active{background:#e67e22;color:#000}
+/* LOGO */
+.logo{text-align:center;font-size:30px;font-weight:900;letter-spacing:3px;margin-bottom:18px}
+.logo span{
+  background:linear-gradient(90deg,#4285F4,#DB4437,#F4B400,#0F9D58,#4285F4);
+  background-size:300% 300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:google 3s linear infinite;
+}
+@keyframes google{to{background-position:300%}}
+
+/* TABS */
+.tabs{display:flex;justify-content:center;gap:12px;margin-bottom:18px}
+.tab{
+  padding:10px 22px;border-radius:30px;
+  background:rgba(255,255,255,.1);
+  font-weight:700;cursor:pointer
+}
+.tab.active{background:linear-gradient(45deg,#f1c40f,#e67e22);color:#000}
 
 /* CARD */
-.header{text-align:center;margin-bottom:15px}
-.date{background:#f1c40f;color:#000;font-weight:bold;padding:6px 10px;border-radius:5px;display:inline-block;margin-bottom:10px}
-.card{background:#222;padding:15px;border-radius:10px;margin-bottom:15px}
-.league{font-size:14px;color:#bbb;margin-bottom:6px}
-.match{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.teams{font-weight:bold}
-.pick{background:#f39c12;color:#000;font-weight:bold;padding:5px 10px;border-radius:5px}
-.odds{color:#ccc;margin-top:5px}
-.status{margin-top:5px;font-weight:bold;padding:3px 8px;border-radius:5px;display:inline-block}
-.pending{background:#f1c40f;color:#000}
-.win{background:#2ecc71;color:#000}
+.card{
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:14px;
+}
+.card:hover{box-shadow:0 0 18px #f1c40f}
+.league{font-size:12px;color:#aaa}
+.match{display:flex;justify-content:space-between;gap:10px}
+.pick{background:#f1c40f;color:#000;padding:6px 12px;border-radius:10px;font-weight:800}
+.win{color:#2ecc71;font-weight:800}
+
+/* VIP LOCK */
+#vip.locked{filter:blur(6px);pointer-events:none;position:relative}
+.lockText{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:900;color:#f1c40f;
+}
+
+/* OVERLAY */
+.overlay{
+  position:fixed;inset:0;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.85);
+  z-index:999;
+}
+
+/* LOADING */
+.spinner{
+  width:55px;height:55px;border-radius:50%;
+  border:5px solid rgba(255,255,255,.2);
+  border-top:5px solid #f1c40f;
+  animation:spin 1s linear infinite
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* LOGIN */
-#login{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
-#login form{background:#222;padding:20px;border-radius:10px;width:260px;text-align:center;position:relative}
-#login input{width:100%;padding:10px;margin:10px 0;border-radius:5px;border:none}
-#login button{width:100%;padding:10px;background:#f39c12;border:none;font-weight:bold;cursor:pointer}
-.close{position:absolute;top:10px;right:15px;cursor:pointer}
+#loginBox{
+  background:#111;padding:25px;border-radius:18px;
+  width:260px;text-align:center
+}
+#loginBox input{width:100%;padding:10px;margin:12px 0}
+#loginBox button{width:100%;padding:10px;background:#f1c40f;font-weight:900}
+
+/* GRANTED */
+#grantedText{
+  color:#2ecc71;
+  font-size:26px;
+  font-weight:900;
+  letter-spacing:2px
+}
 </style>
 </head>
 
 <body>
 
-<!-- TAB -->
+<div class="logo"><span>WHISMEE</span></div>
+
 <div class="tabs">
-  <div class="tab free active" id="tabFree">🔥 FREE</div>
-  <div class="tab vip" id="tabVip">⚡ VIP</div>
+  <div class="tab active" id="tabFree">FREE</div>
+  <div class="tab" id="tabVip">VIP</div>
 </div>
 
 <!-- FREE -->
-<div id="kontenFree">
-  <div class="header"><h2>🔥 BS.COM 🔥</h2></div>
-  <div class="date">25-12-2025 (Total Odds: 2.1)</div>
-
+<div id="free">
   <div class="card">
-    <div class="league">ARABIA PREMIER LEAGUE</div>
+    <div class="league">NBA</div>
     <div class="match">
-      <div class="teams">AL RIYADH VS AL ETTIFAQ</div>
-      <div class="pick">AL RIYADH OVER 1.5</div>
+      <div>KNICKS vs CAVS</div>
+      <div class="pick">HOME</div>
     </div>
-    <div class="odds">Odds: 1.40</div>
-    <div class="status lose">lose</div>
-  </div>
-
-  <div class="card">
-    <div class="league">USA NBA</div>
-    <div class="match">
-      <div class="teams">NEW YORK KNICKS VS CLEVELAND</div>
-      <div class="pick">HOME WIN</div>
-    </div>
-    <div class="odds">Odds: 1.50</div>
-    <div class="status win">win</div>
+    <div class="win">WIN</div>
   </div>
 </div>
 
 <!-- VIP -->
-<div id="kontenVIP" style="display:none">
-  <div class="header"><h2>⚡ BS.COM VIP ⚡</h2></div>
-  <div class="date">25-12-2025 (Total Odds: 182)</div>
-  
+<div id="vip" class="locked" style="display:none">
+  <div class="lockText">🔒 VIP LOCKED</div>
   <div class="card">
-    <div class="league">ETHIOPIIA PREMIER LEAGUE</div>
+    <div class="league">VIP MATCH</div>
     <div class="match">
-      <div class="teams">ETHIOPIA VS DIRE DAWA</div>
-      <div class="pick">CS 1-2</div>
+      <div>morocco vs mali</div>
+      <div class="pick">CS 2-0</div>
     </div>
-    <div class="odds">Odds: 22</div>
-    <div class="status win">win</div>
-  </div>
-  
-  <div class="card">
-    <div class="league">SYRIA : PREMIER LEAGUE</div>
-    <div class="match">
-      <div class="teams">KHAN SAYKUN VS DAMASKUS AL AHLY</div>
-      <div class="pick">CS 1-1</div>
-    </div>
-    <div class="odds">Odds: 8.3</div>
-    <div class="status win">win</div>
-  </div>
-  
-    <div class="date">24-12-2025 (Total Odds: 27)</div>
-  <div class="card">
-    <div class="league">PIALA AFRIKA</div>
-    <div class="match">
-      <div class="teams">ALGERIA VS SUDAN</div>
-      <div class="pick">CORRECT SCORE 3-0</div>
-    </div>
-    <div class="odds">Odds: 5</div>
-    <div class="status win">win</div>
-  </div>
-  
-  <div class="card">
-    <div class="league">PIALA AFRIKA</div>
-    <div class="match">
-      <div class="teams">IVORY COAST VS MOZAMBIK</div>
-      <div class="pick">CORRECT SCORE 1-0</div>
-    </div>
-    <div class="odds">Odds: 5.4</div>
-    <div class="status win">win</div>
+    <div class="pending">pending</div>
   </div>
 </div>
 
+<!-- LOADING -->
+<div class="overlay" id="loading">
+  <div class="spinner"></div>
+</div>
+
 <!-- LOGIN -->
-<div id="login">
-  <form id="formLogin">
-    <div class="close" onclick="login.style.display='none'">✖</div>
-    <h3>Masukkan Kode VIP</h3>
-    <input type="password" id="kode" placeholder="KODE VIP" required>
-    <button>Masuk</button>
-  </form>
+<div class="overlay" id="login">
+  <div id="loginBox">
+    <h3>VIP ACCESS</h3>
+    <input type="password" id="kode" placeholder="VIP CODE">
+    <button id="btnLogin">ENTER</button>
+  </div>
+</div>
+
+<!-- GRANTED -->
+<div class="overlay" id="granted">
+  <div id="grantedText"></div>
 </div>
 
 <script>
 const tabFree = document.getElementById("tabFree");
 const tabVip = document.getElementById("tabVip");
-const kontenFree = document.getElementById("kontenFree");
-const kontenVIP = document.getElementById("kontenVIP");
-const login = document.getElementById("login");
-const formLogin = document.getElementById("formLogin");
-const kode = document.getElementById("kode");
-const kodeBenar = "*****";
+const free = document.getElementById("free");
+const vip = document.getElementById("vip");
 
+const loading = document.getElementById("loading");
+const login = document.getElementById("login");
+const granted = document.getElementById("granted");
+const grantedText = document.getElementById("grantedText");
+const btnLogin = document.getElementById("btnLogin");
+const kode = document.getElementById("kode");
+
+let vipUnlocked = false;
+
+/* FREE TAB */
 tabFree.onclick = () => {
   tabFree.classList.add("active");
   tabVip.classList.remove("active");
-  kontenFree.style.display = "block";
-  kontenVIP.style.display = "none";
+  free.style.display = "block";
+  vip.style.display = "none";
 };
 
+/* VIP TAB */
 tabVip.onclick = () => {
-  login.style.display = "flex";
-};
-
-formLogin.onsubmit = e => {
-  e.preventDefault();
-  if (kode.value === kodeBenar) {
-    login.style.display = "none";
+  if(vipUnlocked){
     tabVip.classList.add("active");
     tabFree.classList.remove("active");
-    kontenVIP.style.display = "block";
-    kontenFree.style.display = "none";
-    kode.value = "";
-  } else {
-    alert("Kode salah!");
+    free.style.display = "none";
+    vip.style.display = "block";
+  }else{
+    loading.style.display = "flex";
+    setTimeout(()=>{
+      loading.style.display = "none";
+      login.style.display = "flex";
+    },700);
+  }
+};
+
+/* LOGIN */
+btnLogin.onclick = () => {
+  if(kode.value === "*****"){
+    login.style.display = "none";
+    granted.style.display = "flex";
+
+    let text="ACCESS GRANTED";
+    let i=0;
+    grantedText.innerHTML="";
+
+    const anim=setInterval(()=>{
+      grantedText.innerHTML+=text[i++];
+      if(i===text.length){
+        clearInterval(anim);
+        setTimeout(()=>{
+          granted.style.display="none";
+          vipUnlocked=true;
+
+          vip.classList.remove("locked");
+          document.querySelector(".lockText").remove();
+
+          tabVip.classList.add("active");
+          tabFree.classList.remove("active");
+
+          free.style.display="none";
+          vip.style.display="block";
+        },600);
+      }
+    },80);
+  }else{
+    alert("KODE SALAH");
   }
 };
 </script>
