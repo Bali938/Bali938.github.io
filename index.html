@@ -37,11 +37,11 @@ body{background:#000;color:#fff;padding:18px}
   padding:15px;
   margin-bottom:14px;
 }
-.card:hover{box-shadow:0 0 18px #f1c40f}
 .league{font-size:12px;color:#aaa}
 .match{display:flex;justify-content:space-between;gap:10px}
 .pick{background:#f1c40f;color:#000;padding:6px 12px;border-radius:10px;font-weight:800}
 .win{color:#2ecc71;font-weight:800}
+.pending{color:#f1c40f;font-weight:800}
 
 /* VIP LOCK */
 #vip.locked{filter:blur(6px);pointer-events:none;position:relative}
@@ -59,22 +59,22 @@ body{background:#000;color:#fff;padding:18px}
   z-index:999;
 }
 
-/* LOADING */
-.spinner{
-  width:55px;height:55px;border-radius:50%;
-  border:5px solid rgba(255,255,255,.2);
-  border-top:5px solid #f1c40f;
-  animation:spin 1s linear infinite
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* LOGIN */
+/* BOX */
 #loginBox{
   background:#111;padding:25px;border-radius:18px;
-  width:260px;text-align:center
+  width:280px;text-align:center
 }
 #loginBox input{width:100%;padding:10px;margin:12px 0}
-#loginBox button{width:100%;padding:10px;background:#f1c40f;font-weight:900}
+#loginBox button{
+  width:100%;padding:10px;
+  background:#f1c40f;
+  font-weight:900;border:none;
+  margin-top:8px;cursor:pointer
+}
+.waBtn{
+  background:#25D366!important;
+  color:#000;
+}
 
 /* GRANTED */
 #grantedText{
@@ -98,38 +98,59 @@ body{background:#000;color:#fff;padding:18px}
 <!-- FREE -->
 <div id="free">
   <div class="card">
-    <div class="league">NBA</div>
+    <div class="league">PORTUGAL</div>
     <div class="match">
-      <div>KNICKS vs CAVS</div>
+      <div>SPORTING vs RIO AVE</div>
       <div class="pick">HOME</div>
     </div>
-    <div class="win">WIN</div>
+    <div class="pending">PENDING</div>
   </div>
 </div>
 
 <!-- VIP -->
 <div id="vip" class="locked" style="display:none">
   <div class="lockText">🔒 VIP LOCKED</div>
+  
   <div class="card">
-    <div class="league">VIP MATCH</div>
+    <div class="league">SERIE A</div>
     <div class="match">
-      <div>morocco vs mali</div>
+      <div>CEREMONENSE vs NAPOLI</div>
       <div class="pick">CS 2-0</div>
     </div>
-    <div class="pending">pending</div>
+    <div class="pending">PENDING</div>
+  </div>
+
+  <div class="card">
+    <div class="league">PREMIER LEAGUE</div>
+    <div class="match">
+      <div>SUNDERLAND vs LEEDS</div>
+      <div class="pick">CS 2-2</div>
+    </div>
+    <div class="pending">PENDING</div>
   </div>
 </div>
+  
+<!-- PAYMENT -->
+<div class="overlay" id="payment">
+  <div id="loginBox">
+    <h3>VIP PAYMENT</h3>
+    <p style="font-size:14px;margin:12px 0;line-height:1.6">
+      Harga: <b>Rp 100.000 / Minggu</b><br><br>
+      💰 Dana / OVO<br>
+      <b>085264906050</b><br><br>
+      Konfirmasi pembayaran via WhatsApp
+    </p>
 
-<!-- LOADING -->
-<div class="overlay" id="loading">
-  <div class="spinner"></div>
+    <button class="waBtn" onclick="openWA()">KONFIRMASI VIA WHATSAPP</button>
+    <button onclick="openLogin()">SUDAH BAYAR</button>
+  </div>
 </div>
 
 <!-- LOGIN -->
 <div class="overlay" id="login">
   <div id="loginBox">
     <h3>VIP ACCESS</h3>
-    <input type="password" id="kode" placeholder="VIP CODE">
+    <input type="password" id="kode" placeholder="MASUKKAN KODE VIP">
     <button id="btnLogin">ENTER</button>
   </div>
 </div>
@@ -145,16 +166,23 @@ const tabVip = document.getElementById("tabVip");
 const free = document.getElementById("free");
 const vip = document.getElementById("vip");
 
-const loading = document.getElementById("loading");
+const payment = document.getElementById("payment");
 const login = document.getElementById("login");
 const granted = document.getElementById("granted");
 const grantedText = document.getElementById("grantedText");
 const btnLogin = document.getElementById("btnLogin");
 const kode = document.getElementById("kode");
 
-let vipUnlocked = false;
+/* VIP STATUS */
+let vipUnlocked = localStorage.getItem("vip") === "true";
 
-/* FREE TAB */
+/* AUTO */
+if(vipUnlocked){
+  vip.classList.remove("locked");
+  document.querySelector(".lockText")?.remove();
+}
+
+/* FREE */
 tabFree.onclick = () => {
   tabFree.classList.add("active");
   tabVip.classList.remove("active");
@@ -162,7 +190,7 @@ tabFree.onclick = () => {
   vip.style.display = "none";
 };
 
-/* VIP TAB */
+/* VIP */
 tabVip.onclick = () => {
   if(vipUnlocked){
     tabVip.classList.add("active");
@@ -170,19 +198,28 @@ tabVip.onclick = () => {
     free.style.display = "none";
     vip.style.display = "block";
   }else{
-    loading.style.display = "flex";
-    setTimeout(()=>{
-      loading.style.display = "none";
-      login.style.display = "flex";
-    },700);
+    payment.style.display = "flex";
   }
 };
 
-/* LOGIN */
+function openLogin(){
+  payment.style.display="none";
+  login.style.display="flex";
+}
+
+/* OPEN WHATSAPP */
+function openWA(){
+  const msg = encodeURIComponent(
+    "Halo admin WHISMEE, saya sudah transfer VIP Rp100.000 / Minggu.\nMohon konfirmasi 🙏"
+  );
+  window.open("https://wa.me/6285264906050?text="+msg,"_blank");
+}
+
+/* LOGIN CHECK */
 btnLogin.onclick = () => {
-  if(kode.value === "*****"){
-    login.style.display = "none";
-    granted.style.display = "flex";
+  if(kode.value === "VIP2025"){
+    login.style.display="none";
+    granted.style.display="flex";
 
     let text="ACCESS GRANTED";
     let i=0;
@@ -195,20 +232,20 @@ btnLogin.onclick = () => {
         setTimeout(()=>{
           granted.style.display="none";
           vipUnlocked=true;
+          localStorage.setItem("vip","true");
 
           vip.classList.remove("locked");
           document.querySelector(".lockText").remove();
 
           tabVip.classList.add("active");
           tabFree.classList.remove("active");
-
           free.style.display="none";
           vip.style.display="block";
         },600);
       }
     },80);
   }else{
-    alert("KODE SALAH");
+    alert("KODE VIP SALAH");
   }
 };
 </script>
