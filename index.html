@@ -40,7 +40,6 @@ body{background:#000;color:#fff;padding:18px}
 .league{font-size:12px;color:#aaa}
 .match{display:flex;justify-content:space-between;gap:10px}
 .pick{background:#f1c40f;color:#000;padding:6px 12px;border-radius:10px;font-weight:800}
-.win{color:#2ecc71;font-weight:800}
 .pending{color:#f1c40f;font-weight:800}
 
 /* VIP LOCK */
@@ -71,10 +70,7 @@ body{background:#000;color:#fff;padding:18px}
   font-weight:900;border:none;
   margin-top:8px;cursor:pointer
 }
-.waBtn{
-  background:#25D366!important;
-  color:#000;
-}
+.waBtn{background:#25D366!important;color:#000}
 
 /* GRANTED */
 #grantedText{
@@ -110,7 +106,7 @@ body{background:#000;color:#fff;padding:18px}
 <!-- VIP -->
 <div id="vip" class="locked" style="display:none">
   <div class="lockText">🔒 VIP LOCKED</div>
-  
+
   <div class="card">
     <div class="league">FA ENGLISH</div>
     <div class="match">
@@ -129,7 +125,7 @@ body{background:#000;color:#fff;padding:18px}
     <div class="pending">PENDING</div>
   </div>
 </div>
-  
+
 <!-- PAYMENT -->
 <div class="overlay" id="payment">
   <div id="loginBox">
@@ -140,7 +136,6 @@ body{background:#000;color:#fff;padding:18px}
       <b>085264906050</b><br><br>
       Konfirmasi pembayaran via WhatsApp
     </p>
-
     <button class="waBtn" onclick="openWA()">KONFIRMASI VIA WHATSAPP</button>
     <button onclick="openLogin()">SUDAH BAYAR</button>
   </div>
@@ -162,27 +157,21 @@ body{background:#000;color:#fff;padding:18px}
 
 <script>
 const tabFree = document.getElementById("tabFree");
-const tabVip = document.getElementById("tabVip");
+const tabVip  = document.getElementById("tabVip");
 const free = document.getElementById("free");
-const vip = document.getElementById("vip");
+const vip  = document.getElementById("vip");
 
 const payment = document.getElementById("payment");
-const login = document.getElementById("login");
+const login   = document.getElementById("login");
 const granted = document.getElementById("granted");
 const grantedText = document.getElementById("grantedText");
 const btnLogin = document.getElementById("btnLogin");
 const kode = document.getElementById("kode");
 
-/* VIP STATUS */
-let vipUnlocked = localStorage.getItem("vip") === "true";
+/* STATUS VIP (RESET SETIAP RELOAD) */
+let vipUnlocked = false;
 
-/* AUTO */
-if(vipUnlocked){
-  vip.classList.remove("locked");
-  document.querySelector(".lockText")?.remove();
-}
-
-/* FREE */
+/* TAB FREE */
 tabFree.onclick = () => {
   tabFree.classList.add("active");
   tabVip.classList.remove("active");
@@ -190,7 +179,7 @@ tabFree.onclick = () => {
   vip.style.display = "none";
 };
 
-/* VIP */
+/* TAB VIP */
 tabVip.onclick = () => {
   if(vipUnlocked){
     tabVip.classList.add("active");
@@ -207,7 +196,7 @@ function openLogin(){
   login.style.display="flex";
 }
 
-/* OPEN WHATSAPP */
+/* WHATSAPP */
 function openWA(){
   const msg = encodeURIComponent(
     "Halo admin WHISMEE, saya sudah transfer VIP Rp100.000 / Minggu.\nMohon konfirmasi 🙏"
@@ -218,6 +207,7 @@ function openWA(){
 /* LOGIN CHECK */
 btnLogin.onclick = () => {
   if(kode.value === "VIP2025"){
+    vipUnlocked = true;
     login.style.display="none";
     granted.style.display="flex";
 
@@ -231,9 +221,6 @@ btnLogin.onclick = () => {
         clearInterval(anim);
         setTimeout(()=>{
           granted.style.display="none";
-          vipUnlocked=true;
-          localStorage.setItem("vip","true");
-
           vip.classList.remove("locked");
           document.querySelector(".lockText").remove();
 
